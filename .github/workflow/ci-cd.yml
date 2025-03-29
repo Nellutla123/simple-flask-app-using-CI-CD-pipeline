@@ -1,0 +1,22 @@
+name: Flask CI/CD with Docker
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker Image
+      run: docker build -t flask-app .
+
+    - name: Run Flask App
+      run: docker run -d -p 5000:5000 flask-app
